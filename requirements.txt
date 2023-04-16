@@ -1,0 +1,4 @@
+beautifulsoup4==4.12.2
+EbookLib==0.18
+pandas==1.5.2
+TTS==0.13.2
