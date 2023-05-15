@@ -1,5 +1,13 @@
+Problem/use-case
+- suffering from info overload, hard to keep head above flow of information
+- finding that I'm not having alot of time to read text > but do haev lots of free time to listen to podcasts/audio
+- take text publications from high quality publishers > TTS > listen as audio/podcast
+
 0. nautilus subscription
-- chrome downloader
+- chrome downloader?
+    - can't quite remember: https://www.downthemall.net/
+    - https://chrome.google.com/webstore/detail/simple-mass-downloader/abdkkegmcbiomijcbdaodaflgehfffed
+- download 96 copies of nautilus, a long-form, science a-current afair style publication, similar to Quanta
 
 1. parse ebook
     - extract chapters
@@ -25,16 +33,20 @@
 - 196 words > 55 seconds processing > 1.5 minutes
     - probably going to need some acceleration > runpod serverless GPUs?
 
+3.2 GPU inference
+- canvas a few options
+https://www.banana.dev/serverless-gpu-inference
+https://www.runpod.io/console/pods
+
+- clone repo > SCP data > TTS > SCP back
+- formalize pipeline/CI/CD as an extension
+
 3.2 Voice cloning
-- Dr. Karl? > find some audio
+- Dr. Karl? > find some audio, pull down
+    - how much audio?
+    - experiments? > num minutes, hours, try a few different voices > aus personalities
 
-4. access?
-    - notional stream API?
-
-5. deployment
-    - formalize ingestion pipeline
-        - DB for finalized articles
-        - S3 for audio
-    - API
-        - FastAPI stream
-    - query streams
+4. streaming API?
+    - notional stream API? > FastAPI sketch
+    - docker compose > postgres, minio, API
+    - docker containers
