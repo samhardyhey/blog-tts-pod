@@ -50,3 +50,14 @@ https://www.runpod.io/console/pods
     - notional stream API? > FastAPI sketch
     - docker compose > postgres, minio, API
     - docker containers
+
+Polly IAM
+# get IAM users
+aws iam list-users
+
+# get policies associated with user
+aws iam list-attached-user-policies --user-name sam.hardy
+
+# get full poly iam permissions
+aws iam attach-user-policy --user-name sam.hardy --policy-arn arn:aws:iam::aws:policy/AmazonPollyFullAccess
+

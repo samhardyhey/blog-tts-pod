@@ -27,7 +27,11 @@ def find_sentence_index_with_keyword(sentences, keywords, find_first=True):
 def find_author_sentence_index(sentences):
     index = -1  # default to not found
     return next(
-        (i for i, sentence in enumerate(sentences) if sentence.lower().strip().startswith("by")),
+        (
+            i
+            for i, sentence in enumerate(sentences)
+            if sentence.lower().strip().startswith("by")
+        ),
         index,
     )
 
@@ -54,7 +58,9 @@ def extract_article_metadata(item_record):
         "Evolution",
         "Philosophy",
     ]
-    segment_sent_index = find_sentence_index_with_keyword(sents, known_segments, find_first=True)
+    segment_sent_index = find_sentence_index_with_keyword(
+        sents, known_segments, find_first=True
+    )
     article_metadata = {"segment": sents[segment_sent_index]}
     # extract author
     author_sent_index = find_author_sentence_index(sents)
@@ -62,7 +68,9 @@ def extract_article_metadata(item_record):
 
     # extract headline/bylines
     candidate_hb_lines = sents[segment_sent_index + 1 : author_sent_index]
-    if len(candidate_hb_lines) > 1 and all(len(e.split(" ")) <= 20 for e in candidate_hb_lines):
+    if len(candidate_hb_lines) > 1 and all(
+        len(e.split(" ")) <= 20 for e in candidate_hb_lines
+    ):
         article_metadata["headline"] = sents[segment_sent_index + 1]
         article_metadata["byline"] = sents[segment_sent_index + 2]
     else:
@@ -71,12 +79,20 @@ def extract_article_metadata(item_record):
 
     # remove image/photo credits from sents
     visual_credit_keywords = ["illus", "pictur", "photo"]
-    visual_credit_sent_index = find_sentence_index_with_keyword(sents, visual_credit_keywords, find_first=True)
-    sents = sents[visual_credit_sent_index + 1 :] if visual_credit_sent_index != -1 else sents
+    visual_credit_sent_index = find_sentence_index_with_keyword(
+        sents, visual_credit_keywords, find_first=True
+    )
+    sents = (
+        sents[visual_credit_sent_index + 1 :]
+        if visual_credit_sent_index != -1
+        else sents
+    )
 
     # remove author sign off from sents
     author_keywords = [article_metadata["author"]]
-    author_sent_index = find_sentence_index_with_keyword(sents, author_keywords, find_first=False)
+    author_sent_index = find_sentence_index_with_keyword(
+        sents, author_keywords, find_first=False
+    )
     sents = sents[:author_sent_index] if author_sent_index != -1 else sents
 
     article_metadata["sents"] = sents
@@ -113,13 +129,15 @@ def extract_chapter_text(ebook_path):
 
 if __name__ == "__main__":
     # TODO: glob dir/ingest all
-    nautilus_dir = Path("/Users/samhardyhey/Desktop/nautilus_scrape")
+    nautilus_dir = Path("../data/nautilus_scrape/")
     nautilus_issues = sorted(list(nautilus_dir.glob("*.epub")))
 
     nautilus_dfs = []
     for issue in nautilus_issues[:20]:
         # 47 issue?
-        df = extract_chapter_text(issue).pipe(lambda x: x[x.parsed_content.apply(lambda y: len(y.split(" ")) > 10)])
+        df = extract_chapter_text(issue).pipe(
+            lambda x: x[x.parsed_content.apply(lambda y: len(y.split(" ")) > 10)]
+        )
         nautilus_dfs.append(df)
 
     df = pd.concat([e for e in nautilus_dfs if not e.empty])
