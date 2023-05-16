@@ -1,7 +1,9 @@
 TTS
 https://news.ycombinator.com/item?id=34211457
 
-Polly IAM
+
+## AWS
+```
 # get IAM users
 aws iam list-users
 
@@ -10,14 +12,36 @@ aws iam list-attached-user-policies --user-name sam.hardy
 
 # get full poly iam permissions
 aws iam attach-user-policy --user-name sam.hardy --policy-arn arn:aws:iam::aws:policy/AmazonPollyFullAccess
+```
 
-# bucket stuff
+```
+# configure/create bucket
 pip install awscli
 
 aws configure
 
 aws s3api create-bucket --bucket blog-tts-pod --region ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2
 
+# rsync
 aws s3 sync ./data s3://blog-tts-pod/data
 
 aws s3 sync s3://blog-tts-pod/data ./data
+```
+
+## GCP
+```
+# list existing service account names/emails
+gcloud iam service-accounts list
+
+# create a new service account
+gcloud iam service-accounts create <account_name> --display-name "<display name>"
+
+# add TTS permissions on the service account
+gcloud projects add-iam-policy-binding <project_id> --member serviceAccount:<service_account_name>@<project_id>.iam.gserviceaccount.com --role roles/editor
+
+# create a service account key
+gcloud iam service-accounts keys create ~/key.json --iam-account <service_account_name>@<project_id>.iam.gserviceaccount.com
+
+# enable the services on the actual project
+gcloud services enable texttospeech.googleapis.com --project=<project_id>
+```

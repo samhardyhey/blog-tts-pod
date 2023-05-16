@@ -1,30 +1,94 @@
-import pandas as pd
+import os
+import time
+from pathlib import Path
+
+import boto3
+from dotenv import load_dotenv
+from google.cloud import texttospeech
+from google.oauth2.service_account import Credentials
 from TTS.api import TTS
 
-if __name__ == "__main__":
-    df = pd.read_csv("./data/naut_0.csv")
+from utils import logger, to_snake_case
 
-    # for model_name in TTS.list_models():
-    #     # Init TTS
-    #     tts = TTS(model_name)
-    #     # Run TTS
-    #     # ❗ Since this model is multi-speaker and multi-lingual, we must set the target speaker and the language
-    # Text to speech with a numpy output
-    # wav = tts.tts("This is a test! This is also a test!!", speaker=tts.speakers[0], language=tts.languages[0])
-    # Text to speech to a file
-    # tts.tts_to_file(
-    #     text="Hello world!",
-    #     speaker=tts.speakers[0],
-    #     language=tts.languages[0],
-    #     file_path=f"./data/{model_name}.wav",
-    # )
+load_dotenv()
 
-    model_name = "tts_models/en/ljspeech/tacotron2-DDC"
-    tts = TTS(model_name)
+output_dir = Path("./data/tts_output/dev/")
 
-    # for idx, row in df.iterrows():
-    # tts.tts_to_file(text="Hello world this is me!", file_path="./data/test.wav")
-    # TODO: long-form inputs > split? split sizes can't be bigger than kernel still
-    tts.tts_to_file(
-        text=df.iloc[0].parsed_content, file_path="./data/parsed_content.wav"
+
+def tts_coqui(model_name, text, text_name, output_dir):
+    # tts = TTS(model_name=model_name, gpu=True)
+    tts = TTS(model_name=model_name)
+    coqui_output_dir = output_dir / "coqui"
+    if coqui_output_dir.exists() is False:
+        coqui_output_dir.mkdir(parents=True)
+    save_file = (
+        coqui_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
     )
+    start = time.time()
+    tts.tts_to_file(text=text, file_path=save_file)
+    end = time.time()
+    logger.info(f"Successuflly Coqui TTS {text_name} in {end - start} seconds")
+
+
+def tts_aws(model_name, text, text_name, output_dir):
+    # config
+    polly_client = boto3.Session().client("polly")
+
+    # configure/create output dir
+    aws_polly_output_dir = output_dir / "aws"
+    if aws_polly_output_dir.exists() is False:
+        aws_polly_output_dir.mkdir(parents=True)
+    save_file = (
+        aws_polly_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
+    )
+
+    # synthesize the speech
+    start = time.time()
+    response = polly_client.synthesize_speech(
+        VoiceId=model_name, OutputFormat="mp3", Text=text
+    )
+    with open(str(save_file), "wb") as file:
+        file.write(response["AudioStream"].read())
+    end = time.time()
+    logger.info(f"Successuflly AWS TTS {text_name} in {end - start} seconds")
+
+
+def tts_gcp(model_name, text, text_name, output_dir):
+    # load credentials/client/config (far out)
+    GOOGLE_APPLICATION_CREDENTIALS = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
+    credentials = Credentials.from_service_account_file(GOOGLE_APPLICATION_CREDENTIALS)
+    client = texttospeech.TextToSpeechClient(credentials=credentials)
+    synthesis_input = texttospeech.SynthesisInput(text=text)
+    voice = texttospeech.VoiceSelectionParams(
+        language_code="en-AU",
+        name=model_name,
+    )
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
+
+    # configure/create output dir
+    gcp_output_dir = output_dir / "gcp"
+    if gcp_output_dir.exists() is False:
+        gcp_output_dir.mkdir(parents=True)
+    save_file = gcp_output_dir / f"{to_snake_case(model_name)}_{text_name}.mp3"
+
+    # finally synthesize the speech..
+    start = time.time()
+    response = client.synthesize_speech(
+        input=synthesis_input, voice=voice, audio_config=audio_config
+    )
+    with open(str(save_file), "wb") as file:
+        file.write(response.audio_content)
+    end = time.time()
+    logger.info(f"Successuflly GCP TTS {text_name} in {end - start} seconds")
+
+
+# if __name__ == "__main__":
+# tts_coqui(
+#     "tts_models/en/ek1/tacotron2",
+#     nautilus_edito rs_note,
+#     "nautilus_editors_note",
+#     output_dir,
+# )
+# tts_aws_polly("Nicole", nautilus_editors_note, "nautilus_editors_note", output_dir)
