@@ -25,4 +25,6 @@ if __name__ == "__main__":
     # for idx, row in df.iterrows():
     # tts.tts_to_file(text="Hello world this is me!", file_path="./data/test.wav")
     # TODO: long-form inputs > split? split sizes can't be bigger than kernel still
-    tts.tts_to_file(text=df.iloc[0].parsed_content, file_path="./data/parsed_content.wav")
+    tts.tts_to_file(
+        text=df.iloc[0].parsed_content, file_path="./data/parsed_content.wav"
+    )
