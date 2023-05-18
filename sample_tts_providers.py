@@ -10,7 +10,7 @@ coqui_model_names = [
     "tts_models/en/ljspeech/glow-tts",
 ]
 
-aws_model_names = ["Nicole", "Russel"]
+aws_model_names = ["Nicole", "Russell"]
 
 gcp_model_names = [
     "en-AU-Neural2-A",
@@ -44,12 +44,10 @@ if __name__ == "__main__":
 
     # AWS Polly
     for aws_model_name in aws_model_names:
-        tts_aws(
-            aws_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir
-        )
+        tts_aws(aws_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir)
 
-    # GCP
-    for gcp_model_name in gcp_model_names:
-        tts_gcp(
-            gcp_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir
-        )
+    # # GCP
+    # for gcp_model_name in gcp_model_names:
+    #     tts_gcp(
+    #         gcp_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir
+    #     )

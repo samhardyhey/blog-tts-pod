@@ -1,7 +1,6 @@
 TTS
 https://news.ycombinator.com/item?id=34211457
 
-
 ## AWS
 ```
 # get IAM users
@@ -25,7 +24,7 @@ aws s3api create-bucket --bucket blog-tts-pod --region ap-southeast-2 --create-b
 # rsync
 aws s3 sync ./data s3://blog-tts-pod/data
 
-aws s3 sync s3://blog-tts-pod/data ./data
+aws s3 sync s3://blog-tts-pod/data ./data --delete
 ```
 
 ## GCP
