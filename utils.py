@@ -1,4 +1,5 @@
 import logging
+import re
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -12,9 +13,8 @@ def to_snake_case(s):
     """
     Converts a string to snake case.
     """
-    # Replace spaces and dashes with underscores
-    s = s.replace(" ", "_")
-    s = s.replace("-", "_")
+    # Replace all non-alphanumeric characters with underscores
+    s = re.sub(r"\W", "_", s)
 
     # Split the string into words
     words = s.split()

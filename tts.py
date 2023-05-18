@@ -15,16 +15,18 @@ load_dotenv()
 output_dir = Path("./data/tts_output/dev/")
 
 
-def tts_coqui(model_name, text, text_name, output_dir):
+def tts_coqui(model_name, text, save_path):
     tts = TTS(model_name=model_name, gpu=True)
-    coqui_output_dir = output_dir / "coqui"
-    if coqui_output_dir.exists() is False:
-        coqui_output_dir.mkdir(parents=True)
-    save_file = coqui_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
+    if save_path.parent.exists() is False:
+        save_path.parent.mkdir(parents=True)
+    # coqui_output_dir = output_dir / "coqui"
+    # if coqui_output_dir.exists() is False:
+    #     coqui_output_dir.mkdir(parents=True)
+    # save_file = coqui_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
     start = time.time()
-    tts.tts_to_file(text=text, file_path=save_file)
+    tts.tts_to_file(text=text, file_path=save_path)
     end = time.time()
-    logger.info(f"Successuflly Coqui TTS {text_name} in {end - start} seconds")
+    logger.info(f"Successuflly Coqui TTS {save_path.name} in {end - start} seconds")
 
 
 def tts_aws(model_name, text, text_name, output_dir):
