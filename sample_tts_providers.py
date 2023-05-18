@@ -1,8 +1,5 @@
 from pathlib import Path
 
-import pandas as pd
-from TTS.api import TTS
-
 from tts import tts_aws, tts_coqui, tts_gcp
 from utils import nautilus_editors_note
 
