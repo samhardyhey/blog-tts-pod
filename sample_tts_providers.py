@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tts import tts_aws, tts_coqui, tts_gcp
+from tts import tts_aws, tts_coqui
 from utils import nautilus_editors_note
 
 coqui_model_names = [
@@ -44,7 +44,9 @@ if __name__ == "__main__":
 
     # AWS Polly
     for aws_model_name in aws_model_names:
-        tts_aws(aws_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir)
+        tts_aws(
+            aws_model_name, nautilus_editors_note, "nautilus_editors_note", output_dir
+        )
 
     # # GCP
     # for gcp_model_name in gcp_model_names:

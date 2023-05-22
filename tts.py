@@ -37,11 +37,15 @@ def tts_aws(model_name, text, text_name, output_dir):
     aws_polly_output_dir = output_dir / "aws"
     if aws_polly_output_dir.exists() is False:
         aws_polly_output_dir.mkdir(parents=True)
-    save_file = aws_polly_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
+    save_file = (
+        aws_polly_output_dir / f"{to_snake_case(Path(model_name).name)}_{text_name}.mp3"
+    )
 
     # synthesize the speech
     start = time.time()
-    response = polly_client.synthesize_speech(VoiceId=model_name, OutputFormat="mp3", Text=text)
+    response = polly_client.synthesize_speech(
+        VoiceId=model_name, OutputFormat="mp3", Text=text
+    )
     with open(str(save_file), "wb") as file:
         file.write(response["AudioStream"].read())
     end = time.time()
@@ -58,7 +62,9 @@ def tts_gcp(model_name, text, text_name, output_dir):
         language_code="en-AU",
         name=model_name,
     )
-    audio_config = texttospeech.AudioConfig(audio_encoding=texttospeech.AudioEncoding.MP3)
+    audio_config = texttospeech.AudioConfig(
+        audio_encoding=texttospeech.AudioEncoding.MP3
+    )
 
     # configure/create output dir
     gcp_output_dir = output_dir / "gcp"
@@ -68,7 +74,9 @@ def tts_gcp(model_name, text, text_name, output_dir):
 
     # finally synthesize the speech..
     start = time.time()
-    response = client.synthesize_speech(input=synthesis_input, voice=voice, audio_config=audio_config)
+    response = client.synthesize_speech(
+        input=synthesis_input, voice=voice, audio_config=audio_config
+    )
     with open(str(save_file), "wb") as file:
         file.write(response.audio_content)
     end = time.time()

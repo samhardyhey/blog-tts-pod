@@ -54,7 +54,9 @@ def parse_issue_articles(ebook_path):
             article_record = parse_article_record(item.get_body_content())
 
             # add issue metadata
-            article_record.update({"item_name": item.get_name(), "issue_title": book.title})
+            article_record.update(
+                {"item_name": item.get_name(), "issue_title": book.title}
+            )
             article_records.append(article_record)
     return pd.DataFrame(article_records)
 
