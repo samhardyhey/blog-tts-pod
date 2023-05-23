@@ -19,7 +19,7 @@ def to_snake_case(s):
     # Split the string into words
     words = s.split()
 
-    return "_".join(word.lower() for word in words)
+    return "_".join(re.sub(r"__", "_", word.lower()) for word in words if word != "_")
 
 
 nautilus_editors_note = """Behold the humble nautilus. Just about a foot in diameter, it is a slow bottom-dweller with short tentacles that moves through the water with an unsteady wobble. It's also 500 million years old and, in its day, was the best and brightest, using its newly evolved depth control to lay waste to acre after acre of scuttling crustacean prey.
