@@ -22,7 +22,7 @@ aws configure
 aws s3api create-bucket --bucket blog-tts-pod --region ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2
 
 # rsync
-aws s3 sync ./data s3://blog-tts-pod/data
+aws s3 sync ./data s3://blog-tts-pod/data --delete
 
 aws s3 sync s3://blog-tts-pod/data ./data --delete
 ```
