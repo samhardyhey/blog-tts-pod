@@ -6,14 +6,9 @@ from pathlib import Path
 import boto3
 import pandas as pd
 import torch
-from config import (
-    aws_model_names,
-    coqui_single_speaker_models,
-    coqui_vkts_speaker_indices,
-    data_dir,
-    dev_output_dir,
-    gcp_model_names,
-)
+from config import (aws_model_names, coqui_single_speaker_models,
+                    coqui_vkts_speaker_indices, data_dir, dev_output_dir,
+                    gcp_model_names)
 from dotenv import load_dotenv
 from google.cloud import texttospeech
 from google.oauth2.service_account import Credentials
@@ -117,6 +112,7 @@ def tts_all_articles():
         pd.read_csv(data_dir / "naut_all.csv")
         .assign(issue_number=lambda x: x.issue_title.factorize()[0] + 1)
         .assign(article_number=lambda x: x.groupby("issue_number").cumcount() + 1)
+        .query('issue_number > 47')
     )
     output_dir = Path(__file__).parents[0] / "data/tts_output"
     log_records = []
@@ -132,17 +128,20 @@ def tts_all_articles():
             continue
 
         speaker_index = random.choice(coqui_vkts_speaker_indices)
-        start = time.time()
-        tts_coqui_vctk_multi_speaker(speaker_index, row.article, article_fp)
-        end = time.time()
-        log_records.append(
-            {
-                "issue_number": row.issue_number,
-                "article_number": row.article_number,
-                "n_tokens": len(row.article.split(" ")),
-                "time_elapsed": end - start,
-            }
-        )
+        try:
+            start = time.time()
+            tts_coqui_vctk_multi_speaker(speaker_index, row.article, article_fp)
+            end = time.time()
+            log_records.append(
+                {
+                    "issue_number": row.issue_number,
+                    "article_number": row.article_number,
+                    "n_tokens": len(row.article.split(" ")),
+                    "time_elapsed": end - start,
+                }
+            )
+        except Exception:
+            logger.error(f"Unable to synthesize text for: {row.headline}")
 
     pd.DataFrame(log_records).to_csv(data_dir / "tts_logs.csv", index=False)
 
