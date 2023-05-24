@@ -14,4 +14,4 @@ class Article(SQLModel, table=True):
     byline: str
     issue_number: int
     article_number: int
-    audio_url: str
+    object_key: str
