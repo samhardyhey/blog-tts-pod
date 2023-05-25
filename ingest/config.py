@@ -1,13 +1,21 @@
 from pathlib import Path
 
-coqui_single_speaker_models = [
+NAUTILUS_EDITORS_NOTE = """Behold the humble nautilus. Just about a foot in diameter, it is a slow bottom-dweller with short tentacles that moves through the water with an unsteady wobble. It's also 500 million years old and, in its day, was the best and brightest, using its newly evolved depth control to lay waste to acre after acre of scuttling crustacean prey.
+We became interested in it here at Nautilus because, well, we stole its name. But also because (for a mollusk) it represents a remarkable intersection of science, math, myth, and culture. Since that is exactly the kind of intersection we love to write about, we decided to put together a little "teaser" issue all about it.
+There's the science. The nautilus has a beautiful, logarithmic, and fractal spiral in its shell. Benoit Mandelbrot, discoverer of the fractal, gives us a few words on that topic. One of the world's foremost nautilus experts, Peter Ward, tells us about nautilus evolution and biology, and about his life of nautilus research.
+Then, the myth: from Jules Verne's fictional submarine, to Oliver Wendell Holmes' poem, to how and why we turn science into story.
+Two chapters, one undersea creature. Welcome aboard.
+Michael Segal
+    Editor in Chief"""
+
+COQUI_SINGLE_SPEAKER_MODELS = [
     "tts_models/en/ek1/tacotron2",
     "tts_models/en/ljspeech/tacotron2-DDC",
     "tts_models/en/ljspeech/tacotron2-DDC_ph",
     "tts_models/en/ljspeech/glow-tts",
 ]
 
-coqui_vkts_speaker_indices = [
+COQUI_VKTS_SPEAKER_INDICES = [
     "p225",
     "p226",
     "p227",
@@ -118,9 +126,9 @@ coqui_vkts_speaker_indices = [
     "p376",
 ]
 
-aws_model_names = ["Nicole", "Russell", "Olivia"]
+AWS_MODEL_NAMES = ["Nicole", "Russell", "Olivia"]
 
-gcp_model_names = [
+GCP_MODEL_NAMES = [
     "en-AU-Neural2-A",
     "en-AU-Neural2-B",
     "en-AU-Neural2-C",
@@ -138,6 +146,5 @@ gcp_model_names = [
     "en-AU-Wavenet-D",
 ]
 
-data_dir = Path(__file__).parents[0] / "data"
-dev_output_dir = Path(__file__).parents[0] / "data/tts_output/dev"
-output_dir = Path(__file__).parents[0] / "data/tts_output"
+DEV_OUTPUT_DIR = Path(__file__).parents[0] / "data/tts_output/dev"
+OUTPUT_DIR = Path(__file__).parents[0] / "data/tts_output"

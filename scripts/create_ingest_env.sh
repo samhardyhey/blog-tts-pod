@@ -7,7 +7,7 @@ apt-get update && apt-get install -y espeak tmux tree
 
 echo "Installing project requirements"
 python -m pip install --upgrade pip
-pip install -r ./requirements.txt
+pip install -r ./ingest/requirements.txt
 
 echo "Configuring Git"
 git config --global user.name "Sam Hardy"

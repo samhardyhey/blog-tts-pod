@@ -6,7 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from ebooklib import epub
 
-from utils import logger
+from ..common.utils import logger
 
 
 def decode_soup_element(element):

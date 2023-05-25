@@ -1,0 +1,38 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+    image: api
+    env_file:
+      - .env
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+
+    tty: true
+    command: bash
+
+  db:
+    image: postgres:12.2
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:

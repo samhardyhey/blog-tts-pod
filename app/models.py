@@ -15,3 +15,6 @@ class Article(SQLModel, table=True):
     issue_number: int
     article_number: int
     object_key: str
+
+    class Config:
+        table_config = {"unique": ["headline", "author", "issue_number"]}

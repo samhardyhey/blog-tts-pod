@@ -1,12 +1,12 @@
 import re
 
-from config import s3_client
+from config import S3_CLIENT
 
 
 def list_s3_bucket_contents(bucket_name):
     return [
         item["Key"]
-        for item in s3_client.list_objects_v2(Bucket=bucket_name)["Contents"]
+        for item in S3_CLIENT.list_objects_v2(Bucket=bucket_name)["Contents"]
     ]
 
 

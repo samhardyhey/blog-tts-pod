@@ -44,3 +44,10 @@ gcloud iam service-accounts keys create ~/key.json --iam-account <service_accoun
 # enable the services on the actual project
 gcloud services enable texttospeech.googleapis.com --project=<project_id>
 ```
+
+## Stream dev
+```
+uvicorn api:app --reload
+
+
+```
