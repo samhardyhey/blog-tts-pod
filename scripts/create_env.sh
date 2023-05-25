@@ -3,8 +3,7 @@
 set -e  # Exit immediately if any command fails
 
 echo "Adding system packages"
-apt-get update
-apt-get install -y espeak
+apt-get update && apt-get install -y espeak tmux tree
 
 echo "Installing project requirements"
 python -m pip install --upgrade pip

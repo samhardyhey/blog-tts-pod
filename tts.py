@@ -112,7 +112,7 @@ def tts_all_articles():
         pd.read_csv(data_dir / "naut_all.csv")
         .assign(issue_number=lambda x: x.issue_title.factorize()[0] + 1)
         .assign(article_number=lambda x: x.groupby("issue_number").cumcount() + 1)
-        .query('issue_number > 47')
+        .query('issue_number < 47')
     )
     output_dir = Path(__file__).parents[0] / "data/tts_output"
     log_records = []
