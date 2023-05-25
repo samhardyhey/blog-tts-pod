@@ -1,13 +1,12 @@
+import logging
 import re
 
-from config import S3_CLIENT
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
-
-def list_s3_bucket_contents(bucket_name):
-    return [
-        item["Key"]
-        for item in S3_CLIENT.list_objects_v2(Bucket=bucket_name)["Contents"]
-    ]
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
 
 
 def to_snake_case(s):

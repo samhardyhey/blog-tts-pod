@@ -4,6 +4,7 @@ services:
   api:
     build:
       dockerfile: Dockerfile
+      context: ./app
     image: api
     env_file:
       - .env
@@ -16,12 +17,12 @@ services:
     ports:
       - "${API_PORT}:${API_PORT}"
     volumes:
-      - ./:/app
+      - ./app:/app
     depends_on:
       - db
 
     tty: true
-    command: bash
+    command: python api.py
 
   db:
     image: postgres:12.2
@@ -31,6 +32,8 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - db:/var/lib/postgresql/data
 

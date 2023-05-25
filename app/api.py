@@ -10,7 +10,7 @@ from sqlmodel import Session, SQLModel, create_engine, select
 
 from config import BUCKET_NAME, NAUT_ALL_OBJECT_KEY, S3_CLIENT
 from models import Article
-from utils import list_s3_bucket_contents, to_snake_case
+from utils import to_snake_case
 
 app = FastAPI()
 

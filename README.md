@@ -48,6 +48,13 @@ gcloud services enable texttospeech.googleapis.com --project=<project_id>
 ## Stream dev
 ```
 uvicorn api:app --reload
-
-
 ```
+
+## Transform
+- Ebook parsing, TTS synthesis
+- pip install `transform/requirements.txt`
+- Adjust main `transform/tts.py` script as needed
+
+## App
+- Query/download TTS articles
+- Run via `docker-compose up --build -d`

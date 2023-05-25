@@ -146,5 +146,7 @@ GCP_MODEL_NAMES = [
     "en-AU-Wavenet-D",
 ]
 
-DEV_OUTPUT_DIR = Path(__file__).parents[0] / "data/tts_output/dev"
-OUTPUT_DIR = Path(__file__).parents[0] / "data/tts_output"
+DATA_DIR = Path(__file__).parents[1] / "data"
+NAUTILUS_EPUB_DIR = DATA_DIR / "nautilus_epub"
+DEV_OUTPUT_DIR = DATA_DIR / "tts_output/dev"
+OUTPUT_DIR = DATA_DIR / "tts_output"

@@ -6,7 +6,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from ebooklib import epub
 
-from ..common.utils import logger
+from config import DATA_DIR, NAUTILUS_EPUB_DIR
+from utils import logger
 
 
 def decode_soup_element(element):
@@ -62,8 +63,7 @@ def parse_issue_articles(ebook_path):
 
 
 if __name__ == "__main__":
-    nautilus_dir = Path("./data/nautilus_epub/")
-    nautilus_issues = sorted(list(nautilus_dir.glob("*.epub")))
+    nautilus_issues = sorted(list(NAUTILUS_EPUB_DIR.glob("*.epub")))
 
     # parse articles for each issue
     nautilus_dfs = []
@@ -84,4 +84,4 @@ if __name__ == "__main__":
         .pipe(lambda x: x[~x.issue_title.isna()])
     )
     logger.info(f"Reducing to {len(df)} articles")
-    df.to_csv("./data/naut_all.csv", index=False)
+    df.to_csv(DATA_DIR / "naut_all.csv", index=False)

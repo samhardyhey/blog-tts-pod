@@ -20,8 +20,7 @@ from config import (
     GCP_MODEL_NAMES,
     NAUTILUS_EDITORS_NOTE,
 )
-
-from ..common.utils import logger, to_snake_case
+from utils import logger, to_snake_case
 
 load_dotenv()
 
@@ -105,6 +104,7 @@ def tts_gcp(model_name, text, save_path):
 
 
 def sample_tts_providers():
+    # Coqui single speaker models
     for coqui_model in COQUI_SINGLE_SPEAKER_MODELS:
         save_path = (
             DEV_OUTPUT_DIR
@@ -113,6 +113,7 @@ def sample_tts_providers():
         )
         tts_coqui_single_speaker(coqui_model, NAUTILUS_EDITORS_NOTE, save_path)
 
+    # Coqui multi-speaker model (VTKS)
     for speaker_index in COQUI_VKTS_SPEAKER_INDICES:
         save_path = (
             DEV_OUTPUT_DIR / "coqui" / f"vtks_{speaker_index}_nautilus_editors_note.mp3"
@@ -144,7 +145,6 @@ def tts_all_articles():
         pd.read_csv(DATA_DIR / "naut_all.csv")
         .assign(issue_number=lambda x: x.issue_title.factorize()[0] + 1)
         .assign(article_number=lambda x: x.groupby("issue_number").cumcount() + 1)
-        .query("issue_number < 47")
     )
     output_dir = Path(__file__).parents[0] / "data/tts_output"
     log_records = []
@@ -181,5 +181,5 @@ def tts_all_articles():
 
 
 if __name__ == "__main__":
-    sample_tts_providers()
-    # tts_all_articles()
+    # sample_tts_providers()
+    tts_all_articles()
