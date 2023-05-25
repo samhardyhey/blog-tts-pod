@@ -5,3 +5,4 @@ __pycache__/
 data/
 *.mp3
 *.wav
+*.db
