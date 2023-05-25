@@ -16,11 +16,12 @@ from config import (
     COQUI_SINGLE_SPEAKER_MODELS,
     COQUI_VKTS_SPEAKER_INDICES,
     DATA_DIR,
-    GCP_MODEL_NAMES,
     DEV_OUTPUT_DIR,
+    GCP_MODEL_NAMES,
+    NAUTILUS_EDITORS_NOTE,
 )
+
 from ..common.utils import logger, to_snake_case
-from config import NAUTILUS_EDITORS_NOTE
 
 load_dotenv()
 
@@ -110,13 +111,13 @@ def sample_tts_providers():
             / "coqui"
             / f"{to_snake_case(Path(coqui_model).name)}_nautilus_editors_note.mp3"
         )
-        tts_coqui_single_speaker(coqui_model, nautilus_editors_note, save_path)
+        tts_coqui_single_speaker(coqui_model, NAUTILUS_EDITORS_NOTE, save_path)
 
     for speaker_index in COQUI_VKTS_SPEAKER_INDICES:
         save_path = (
             DEV_OUTPUT_DIR / "coqui" / f"vtks_{speaker_index}_nautilus_editors_note.mp3"
         )
-        tts_coqui_vctk_multi_speaker(speaker_index, nautilus_editors_note, save_path)
+        tts_coqui_vctk_multi_speaker(speaker_index, NAUTILUS_EDITORS_NOTE, save_path)
 
     # AWS Polly
     for aws_model_name in AWS_MODEL_NAMES:
@@ -125,7 +126,7 @@ def sample_tts_providers():
             / "aws"
             / f"{to_snake_case(aws_model_name)}_nautilus_editors_note.mp3"
         )
-        tts_aws(aws_model_name, nautilus_editors_note, save_path)
+        tts_aws(aws_model_name, NAUTILUS_EDITORS_NOTE, save_path)
 
     # GCP
     for gcp_model_name in GCP_MODEL_NAMES:
@@ -134,7 +135,7 @@ def sample_tts_providers():
             / "gcp"
             / f"{to_snake_case(gcp_model_name)}_nautilus_editors_note.mp3"
         )
-        tts_gcp(gcp_model_name, nautilus_editors_note, save_path)
+        tts_gcp(gcp_model_name, NAUTILUS_EDITORS_NOTE, save_path)
 
 
 def tts_all_articles():
@@ -180,4 +181,5 @@ def tts_all_articles():
 
 
 if __name__ == "__main__":
-    tts_all_articles()
+    sample_tts_providers()
+    # tts_all_articles()

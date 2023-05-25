@@ -8,6 +8,7 @@ console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
 logger.addHandler(console_handler)
 
+
 def to_snake_case(s):
     """
     Converts a string to snake case.

@@ -6,5 +6,9 @@ WORKDIR /app
 
 COPY . /app
 
+# TODO: copy common > check python paths
+
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+# TODO: add main command

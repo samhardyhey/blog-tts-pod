@@ -81,6 +81,7 @@ def stream_article(
 
     return RedirectResponse(presigned_url)
 
+
 @app.on_event("startup")
 def on_startup():
     with Session(engine) as session:
@@ -115,6 +116,7 @@ def on_startup():
     with Session(engine) as session:
         session.add_all(articles)
         session.commit()
+
 
 def list_s3_bucket_contents(bucket_name):
     return [
