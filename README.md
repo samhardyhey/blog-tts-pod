@@ -5,7 +5,7 @@ Notebooks and scripts for the:
 - TTS sampling
 - Bulk TTS conversion using a Coqui VKTS multi-speaker model (speaker randomly selected)
 
-See the accompanying blog post [here](https://www.samhardyhey.com/poor-mans-asr-pt-1).
+See the accompanying blog post [here](https://www.samhardyhey.com/behold-the-humble-nautilus).
 
 ## Install
 - For epub conversion/parsing and TTS, create env via `scripts/create_env.sh`
