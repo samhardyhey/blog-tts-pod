@@ -20,8 +20,6 @@ services:
       - ./app:/app
     depends_on:
       - db
-
-    tty: true
     command: python api.py
 
   db:

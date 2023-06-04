@@ -1,60 +1,18 @@
-TTS
-https://news.ycombinator.com/item?id=34211457
+## Blog TTS Pod
+Notebooks and scripts for the:
 
-## AWS
-```
-# get IAM users
-aws iam list-users
+- Conversion/parsing of nautilus epub issues
+- TTS sampling
+- Bulk TTS conversion using a Coqui VKTS multi-speaker model (speaker randomly selected)
 
-# get policies associated with user
-aws iam list-attached-user-policies --user-name sam.hardy
+See the accompanying blog post [here](https://www.samhardyhey.com/poor-mans-asr-pt-1).
 
-# get full poly iam permissions
-aws iam attach-user-policy --user-name sam.hardy --policy-arn arn:aws:iam::aws:policy/AmazonPollyFullAccess
-```
+## Install
+- For epub conversion/parsing and TTS, create env via `scripts/create_env.sh`
 
-```
-# configure/create bucket
-pip install awscli
+## Usage
+- **Parsing/conversion.** Via `python transform/ebook.py`
+- **TTS transforms.** Via `python transform/tts.py`
+- **Streaming API.** Via `docker-compose up --build -d`
 
-aws configure
-
-aws s3api create-bucket --bucket blog-tts-pod --region ap-southeast-2 --create-bucket-configuration LocationConstraint=ap-southeast-2
-
-# rsync
-aws s3 sync ./data s3://blog-tts-pod/data --delete
-
-aws s3 sync s3://blog-tts-pod/data ./data --delete
-```
-
-## GCP
-```
-# list existing service account names/emails
-gcloud iam service-accounts list
-
-# create a new service account
-gcloud iam service-accounts create <account_name> --display-name "<display name>"
-
-# add TTS permissions on the service account
-gcloud projects add-iam-policy-binding <project_id> --member serviceAccount:<service_account_name>@<project_id>.iam.gserviceaccount.com --role roles/editor
-
-# create a service account key
-gcloud iam service-accounts keys create ~/key.json --iam-account <service_account_name>@<project_id>.iam.gserviceaccount.com
-
-# enable the services on the actual project
-gcloud services enable texttospeech.googleapis.com --project=<project_id>
-```
-
-## Stream dev
-```
-uvicorn api:app --reload
-```
-
-## Transform
-- Ebook parsing, TTS synthesis
-- pip install `transform/requirements.txt`
-- Adjust main `transform/tts.py` script as needed
-
-## App
-- Query/download TTS articles
-- Run via `docker-compose up --build -d`
+All code obviously dependant upon Nautilus issues, S3 bucket access, some decent hardware to run the TTS conversions.

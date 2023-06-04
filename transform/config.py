@@ -126,7 +126,7 @@ COQUI_VKTS_SPEAKER_INDICES = [
     "p376",
 ]
 
-AWS_MODEL_NAMES = ["Nicole", "Russell", "Olivia"]
+AWS_MODEL_NAMES = ["Nicole", "Russell"]
 
 GCP_MODEL_NAMES = [
     "en-AU-Neural2-A",

@@ -12,12 +12,10 @@ from google.oauth2.service_account import Credentials
 from TTS.api import TTS
 
 from config import (
-    AWS_MODEL_NAMES,
     COQUI_SINGLE_SPEAKER_MODELS,
     COQUI_VKTS_SPEAKER_INDICES,
     DATA_DIR,
     DEV_OUTPUT_DIR,
-    GCP_MODEL_NAMES,
     NAUTILUS_EDITORS_NOTE,
 )
 from utils import logger, to_snake_case
@@ -120,23 +118,23 @@ def sample_tts_providers():
         )
         tts_coqui_vctk_multi_speaker(speaker_index, NAUTILUS_EDITORS_NOTE, save_path)
 
-    # AWS Polly
-    for aws_model_name in AWS_MODEL_NAMES:
-        save_path = (
-            DEV_OUTPUT_DIR
-            / "aws"
-            / f"{to_snake_case(aws_model_name)}_nautilus_editors_note.mp3"
-        )
-        tts_aws(aws_model_name, NAUTILUS_EDITORS_NOTE, save_path)
+    # # AWS Polly
+    # for aws_model_name in AWS_MODEL_NAMES:
+    #     save_path = (
+    #         DEV_OUTPUT_DIR
+    #         / "aws"
+    #         / f"{to_snake_case(aws_model_name)}_nautilus_editors_note.mp3"
+    #     )
+    #     tts_aws(aws_model_name, NAUTILUS_EDITORS_NOTE, save_path)
 
-    # GCP
-    for gcp_model_name in GCP_MODEL_NAMES:
-        save_path = (
-            DEV_OUTPUT_DIR
-            / "gcp"
-            / f"{to_snake_case(gcp_model_name)}_nautilus_editors_note.mp3"
-        )
-        tts_gcp(gcp_model_name, NAUTILUS_EDITORS_NOTE, save_path)
+    # # GCP
+    # for gcp_model_name in GCP_MODEL_NAMES:
+    #     save_path = (
+    #         DEV_OUTPUT_DIR
+    #         / "gcp"
+    #         / f"{to_snake_case(gcp_model_name)}_nautilus_editors_note.mp3"
+    #     )
+    #     tts_gcp(gcp_model_name, NAUTILUS_EDITORS_NOTE, save_path)
 
 
 def tts_all_articles():
@@ -181,5 +179,5 @@ def tts_all_articles():
 
 
 if __name__ == "__main__":
-    # sample_tts_providers()
-    tts_all_articles()
+    sample_tts_providers()
+    # tts_all_articles()
