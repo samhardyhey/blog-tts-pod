@@ -10,9 +10,6 @@ logger.addHandler(console_handler)
 
 
 def to_snake_case(s):
-    """
-    Converts a string to snake case.
-    """
     # Replace all non-alphanumeric characters with underscores
     s = re.sub(r"\W", "_", s)
 

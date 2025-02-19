@@ -1,18 +1,35 @@
-## Blog TTS Pod
-Notebooks and scripts for the:
+# Nautilus TTS Pod 🎧
 
-- Conversion/parsing of nautilus epub issues
-- TTS sampling
-- Bulk TTS conversion using a Coqui VKTS multi-speaker model (speaker randomly selected)
+Convert Nautilus magazine articles into multi-speaker audio using Coqui TTS. Companion code for ["Behold the Humble Nautilus"](https://www.samhardyhey.com/behold-the-humble-nautilus).
 
-See the accompanying blog post [here](https://www.samhardyhey.com/behold-the-humble-nautilus).
+## Features
+- 📚 EPUB parsing and conversion
+- 🗣️ Multi-speaker TTS synthesis
+- 🎵 Audio streaming API
+- ☁️ S3 integration
 
-## Install
-- For epub conversion/parsing and TTS, create env via `scripts/create_env.sh`
+## Setup
+```bash
+# Install dependencies
+./scripts/create_env.sh
+```
 
 ## Usage
-- **Parsing/conversion.** Via `python transform/ebook.py`
-- **TTS transforms.** Via `python transform/tts.py`
-- **Streaming API.** Via `docker-compose up --build -d`
+```bash
+# Convert EPUB files
+python transform/ebook.py
 
-All code obviously dependant upon Nautilus issues, S3 bucket access, some decent hardware to run the TTS conversions.
+# Generate audio
+python transform/tts.py
+
+# Start streaming service
+docker-compose up --build -d
+```
+
+## Structure
+- 📖 `transform/ebook.py` # EPUB processing
+- 🎤 `transform/tts.py` # Audio generation
+- 🌐 `api/` # Streaming service
+- 🐳 `docker-compose.yml` # Container config
+
+*Note: Requires Nautilus subscription, S3 access, and GPU for TTS processing.*
